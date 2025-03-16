@@ -1,6 +1,6 @@
 export const BASE_URL: string = "https://pokeapi.co/api/v2";
 
-export const POKEMON_TYPE_DESCRIPTION: Record<string, { description: string; color: string }> = {
+export const POKEMON_TYPE: Record<string, { description: string; color: string }> = {
   normal: { description: "Balanced and versatile, Normal-type Pokémon often have high base stats but lack type advantages. They are only weak to Fighting-type moves and immune to Ghost-type attacks.", color: "#A8A878" },
   fire: { description: "Fire-type Pokémon are powerful and aggressive, often dealing high damage with moves like Flamethrower. They are strong against Grass, Bug, Ice, and Steel types but weak to Water, Rock, and Ground moves.", color: "#F08030" },
   water: { description: "Water-types are versatile and abundant, often having a balance between offense and defense. They are strong against Fire, Ground, and Rock but weak to Electric and Grass attacks.", color: "#6890F0" },

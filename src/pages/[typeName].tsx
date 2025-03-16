@@ -1,4 +1,4 @@
-import { BASE_URL, POKEMON_TYPE_DESCRIPTION } from "@constants";
+import { BASE_URL, POKEMON_TYPE } from "@constants";
 import { Image, Box, Button, Card, Grid, GridItem, Spinner, Text, CloseButton, Dialog, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -60,7 +60,6 @@ export default function PokemonTypePage() {
 
   const showModal = (pokemon: PokemonDetail): void => {
     setOpenModal(true);
-    console.log(pokemon);
     setPokemon(pokemon);
   }
 
@@ -71,22 +70,45 @@ export default function PokemonTypePage() {
         {loading && <Spinner size="xl" />}
         <Text textStyle="5xl" mb={5} fontWeight="bold">Pokemon type <u>{typeName}</u></Text>
         {pokemonData.length === 0 && <Text color="red.500" fontSize={"2xl"}>No Pokemons to show</Text>}
-        <Grid ml={12} templateColumns="repeat(auto-fit, minmax(370px, 1fr))" gap="6" >
+        <Grid ml={12} templateColumns="repeat(auto-fit, minmax(370px, 1fr))" gap="20" >
           {!loading && !error &&
             paginatedData!.map((pokemon, index) => (
-              <GridItem key={index}>
-                <Card.Root bg={POKEMON_TYPE_DESCRIPTION[typeName! as string].color} boxShadow="2xl" border={'2px solid black'} width="320px" variant={"outline"} key={index}>
-                  <Image
-                    src={pokemon.sprite}
-                    alt={pokemon.name}
-                  />
-                  <Card.Body gap="2">
-                    <Card.Title mb="2" textAlign={'center'} textStyle={"2xl"}>{pokemon.name}</Card.Title>
-                  </Card.Body>
-                  <Card.Footer>
-                    <Button width={'100%'} variant="subtle" onClick={() => showModal(pokemon)!}>Pokemon Info</Button>
-                  </Card.Footer>
-                </Card.Root>
+              <GridItem key={index} bg={'transparent'} perspective={'1000px'} css={({
+                "&:hover [data-inner]": {
+                  transform: "rotateY(180deg)",
+                },
+              })}>
+                <Box data-inner position={'relative'} textAlign={'center'} transition={'transform 0.8s'} transformStyle={'preserve-3d'} width="320px" height="472px">
+                  <Box w={'100%'} h={'100%'} backfaceVisibility={'hidden'} position={"absolute"}
+                    top={0}
+                    left={0}>
+                    <Card.Root bg={POKEMON_TYPE[typeName! as string].color} boxShadow="2xl" border={'2px solid black'} width="320px" h={'472px'} variant={"outline"} key={index}>
+                      <Card.Body display={'flex'} h={'100%'} justifyContent={'center'}>
+                        <Image
+                          src={pokemon.sprite}
+                          alt={pokemon.name}
+                          filter="brightness(0)"
+                        />
+                      </Card.Body>
+                    </Card.Root>
+                  </Box>
+                  <Box transform={'rotateY(180deg)'} w={'100%'} h={'100%'} backfaceVisibility={'hidden'} position={"absolute"} // Ensure it overlaps correctly
+                    top={0}
+                    left={0}>
+                    <Card.Root bg={POKEMON_TYPE[typeName! as string].color} boxShadow="2xl" border={'2px solid black'} width="320px" variant={"outline"} key={index}>
+                      <Image
+                        src={pokemon.sprite}
+                        alt={pokemon.name}
+                      />
+                      <Card.Body gap="2">
+                        <Card.Title mb="2" textAlign={'center'} textStyle={"2xl"}>{pokemon.name}</Card.Title>
+                      </Card.Body>
+                      <Card.Footer>
+                        <Button width={'100%'} variant="subtle" onClick={() => showModal(pokemon)!}>Pokemon Info</Button>
+                      </Card.Footer>
+                    </Card.Root>
+                  </Box>
+                </Box>
               </GridItem>
             ))
           }

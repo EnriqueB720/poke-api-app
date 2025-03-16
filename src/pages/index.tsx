@@ -4,7 +4,7 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Card } from "@chakra-ui/react"
 import { useRouter } from "next/router";
-import { BASE_URL, POKEMON_TYPE_DESCRIPTION } from "@constants";
+import { BASE_URL, POKEMON_TYPE } from "@constants";
 
 
 export default function Home(prop: any) {
@@ -33,11 +33,11 @@ export default function Home(prop: any) {
   }, []);
 
   const getPokemonTypeDescription = (type: string): string => {
-    return POKEMON_TYPE_DESCRIPTION[type].description || "Unknown Pokémon type.";
+    return POKEMON_TYPE[type].description || "Unknown Pokémon type.";
   }
 
   const getPokemonTypeColor = (type: string): string => {
-    return POKEMON_TYPE_DESCRIPTION[type].color || "#000000";
+    return POKEMON_TYPE[type].color || "#000000";
   }
 
   const seePokemons = (pokemonType: String) => {
