@@ -70,6 +70,7 @@ export default function PokemonTypePage() {
       <Box textAlign={'center'} w={'100%'} h={'100%'} minW={"370px"} padding={10}>
         {loading && <Spinner size="xl" />}
         <Text textStyle="5xl" mb={5} fontWeight="bold">Pokemon type <u>{typeName}</u></Text>
+        {pokemonData.length === 0 && <Text color="red.500" fontSize={"2xl"}>No Pokemons to show</Text>}
         <Grid ml={12} templateColumns="repeat(auto-fit, minmax(370px, 1fr))" gap="6" >
           {!loading && !error &&
             paginatedData!.map((pokemon, index) => (
@@ -91,16 +92,17 @@ export default function PokemonTypePage() {
           }
         </Grid>
       </Box>
-      <Box mt={4} mb={5} display={'flex'} justifyContent={'space-evenly'}>
-        <Button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
-          previous
-        </Button>
-        <Text>Page {currentPage} of {totalPages}</Text>
-        <Button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
-          Next
-        </Button>
-      </Box>
-
+      {pokemonData.length !== 0 &&
+        <Box mt={4} mb={5} display={'flex'} justifyContent={'space-evenly'}>
+          <Button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+            previous
+          </Button>
+          <Text>Page {currentPage} of {totalPages}</Text>
+          <Button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
+            Next
+          </Button>
+        </Box>
+      }
       {/* Modal */}
       <Dialog.Root lazyMount open={openModal} onOpenChange={(e) => setOpenModal(e.open)}>
         <Portal>
@@ -121,7 +123,7 @@ export default function PokemonTypePage() {
                 <Text fontSize={"2xl"} fontWeight="bold" mb={3}>Abilities:</Text>
                 <Box ml={7} as="ul" listStyleType="circle" fontSize={'lg'}>
                   {
-                    pokemon?.abilities.map(({ability}: any, index) => (
+                    pokemon?.abilities.map(({ ability }: any, index) => (
                       <li key={index}>{ability.name!}</li>
                     ))
                   }
