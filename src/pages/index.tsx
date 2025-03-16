@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { BASE_URL, POKEMON_TYPE } from "@constants";
 
 
-export default function Home(prop: any) {
+export default function Home() {
 
   const [pokemonTypes, setPokemonTypes] = useState<PokemonType[]>();
   const router = useRouter();
@@ -45,14 +45,34 @@ export default function Home(prop: any) {
   }
 
   return (
-    <Box w={'100%'} h={'100%'} padding={10} textAlign={'center'} minW={'375px'}>
-      <Text textStyle="5xl" mb={5} fontWeight="bold">Pokemon Type</Text>
-      <Stack gap="12" direction="row" wrap="wrap" minW={'375px'}>
+    <Box
+      w={'100%'}
+      h={'100%'}
+      padding={10}
+      textAlign={'center'}
+      minW={'375px'}>
+      <Text
+        textStyle="5xl"
+        mb={5}
+        fontWeight="bold">
+        Pokemon Type</Text>
+      <Stack
+        gap="12"
+        direction="row"
+        wrap="wrap"
+        minW={'375px'}>
         {
           pokemonTypes?.map((type, index) => (
-            <Card.Root boxShadow="2xl" bg={getPokemonTypeColor(type.name!)} width="320px" variant={"outline"} key={index}>
+            <Card.Root
+              boxShadow="2xl"
+              bg={getPokemonTypeColor(type.name!)}
+              width="320px"
+              variant={"outline"}
+              key={index}>
               <Card.Body gap="2">
-                <Avatar.Root size="lg" shape="rounded">
+                <Avatar.Root
+                  size="lg"
+                  shape="rounded">
                   <Avatar.Image src={'./images/pokeBallIcon.png'} />
                   <Avatar.Fallback name={type.name} />
                 </Avatar.Root>
@@ -62,7 +82,11 @@ export default function Home(prop: any) {
                 </Card.Description>
               </Card.Body>
               <Card.Footer justifyContent="flex-end">
-                <Button variant="solid" onClick={() => seePokemons(type.name!)!}>View</Button>
+                <Button
+                  variant="solid"
+                  onClick={() => seePokemons(type.name!)!}>
+                  View
+                </Button>
               </Card.Footer>
             </Card.Root>
           ))

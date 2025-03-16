@@ -24,9 +24,6 @@ export default function PokemonTypePage() {
     currentPage * itemsPerPage
   );
 
-
-
-
   useEffect(() => {
     const fetchPokemon = async () => {
       setLoading(true);
@@ -66,24 +63,60 @@ export default function PokemonTypePage() {
   return (
     <>
       {error && <Text color="red.500">{error}</Text>}
-      <Box textAlign={'center'} w={'100%'} h={'100%'} minW={"370px"} padding={10}>
+      <Box
+        textAlign={'center'}
+        w={'100%'}
+        h={'100%'}
+        minW={"370px"}
+        padding={10}>
         {loading && <Spinner size="xl" />}
-        <Text textStyle="5xl" mb={5} fontWeight="bold">Pokemon type <u>{typeName}</u></Text>
+        <Text
+          textStyle="5xl"
+          mb={5}
+          fontWeight="bold">Pokemon type <u>{typeName}</u></Text>
         {pokemonData.length === 0 && <Text color="red.500" fontSize={"2xl"}>No Pokemons to show</Text>}
-        <Grid ml={12} templateColumns="repeat(auto-fit, minmax(370px, 1fr))" gap="20" >
+        <Grid
+          ml={12}
+          templateColumns="repeat(auto-fit, minmax(370px, 1fr))"
+          gap="20" >
           {!loading && !error &&
             paginatedData!.map((pokemon, index) => (
-              <GridItem key={index} bg={'transparent'} perspective={'1000px'} css={({
-                "&:hover [data-inner]": {
-                  transform: "rotateY(180deg)",
-                },
-              })}>
-                <Box data-inner position={'relative'} textAlign={'center'} transition={'transform 0.8s'} transformStyle={'preserve-3d'} width="320px" height="472px">
-                  <Box w={'100%'} h={'100%'} backfaceVisibility={'hidden'} position={"absolute"}
+              <GridItem
+                key={index}
+                bg={'transparent'}
+                perspective={'1000px'}
+                css={({
+                  "&:hover [data-inner]": {
+                    transform: "rotateY(180deg)",
+                  },
+                })}>
+                <Box
+                  data-inner
+                  position={'relative'}
+                  textAlign={'center'}
+                  transition={'transform 0.8s'}
+                  transformStyle={'preserve-3d'}
+                  width="320px"
+                  height="472px">
+                  <Box
+                    w={'100%'}
+                    h={'100%'}
+                    backfaceVisibility={'hidden'}
+                    position={"absolute"}
                     top={0}
                     left={0}>
-                    <Card.Root bg={POKEMON_TYPE[typeName! as string].color} boxShadow="2xl" border={'2px solid black'} width="320px" h={'472px'} variant={"outline"} key={index}>
-                      <Card.Body display={'flex'} h={'100%'} justifyContent={'center'}>
+                    <Card.Root
+                      bg={POKEMON_TYPE[typeName! as string].color}
+                      boxShadow="2xl"
+                      border={'2px solid black'}
+                      width="320px"
+                      h={'472px'}
+                      variant={"outline"}
+                      key={index}>
+                      <Card.Body
+                        display={'flex'}
+                        h={'100%'}
+                        justifyContent={'center'}>
                         <Image
                           src={pokemon.sprite}
                           alt={pokemon.name}
@@ -92,19 +125,36 @@ export default function PokemonTypePage() {
                       </Card.Body>
                     </Card.Root>
                   </Box>
-                  <Box transform={'rotateY(180deg)'} w={'100%'} h={'100%'} backfaceVisibility={'hidden'} position={"absolute"} // Ensure it overlaps correctly
+                  <Box
+                    transform={'rotateY(180deg)'}
+                    w={'100%'}
+                    h={'100%'}
+                    backfaceVisibility={'hidden'}
+                    position={"absolute"} // Ensure it overlaps correctly
                     top={0}
                     left={0}>
-                    <Card.Root bg={POKEMON_TYPE[typeName! as string].color} boxShadow="2xl" border={'2px solid black'} width="320px" variant={"outline"} key={index}>
+                    <Card.Root
+                      bg={POKEMON_TYPE[typeName! as string].color}
+                      boxShadow="2xl"
+                      border={'2px solid black'}
+                      width="320px"
+                      variant={"outline"}
+                      key={index}>
                       <Image
                         src={pokemon.sprite}
                         alt={pokemon.name}
                       />
                       <Card.Body gap="2">
-                        <Card.Title mb="2" textAlign={'center'} textStyle={"2xl"}>{pokemon.name}</Card.Title>
+                        <Card.Title
+                          mb="2"
+                          textAlign={'center'}
+                          textStyle={"2xl"}>{pokemon.name}</Card.Title>
                       </Card.Body>
                       <Card.Footer>
-                        <Button width={'100%'} variant="subtle" onClick={() => showModal(pokemon)!}>Pokemon Info</Button>
+                        <Button
+                          width={'100%'}
+                          variant="subtle"
+                          onClick={() => showModal(pokemon)!}>Pokemon Info</Button>
                       </Card.Footer>
                     </Card.Root>
                   </Box>
@@ -115,35 +165,61 @@ export default function PokemonTypePage() {
         </Grid>
       </Box>
       {pokemonData.length !== 0 &&
-        <Box mt={4} mb={5} display={'flex'} justifyContent={'space-evenly'}>
-          <Button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+        <Box
+          mt={4}
+          mb={5}
+          display={'flex'}
+          justifyContent={'space-evenly'}>
+          <Button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}>
             previous
           </Button>
           <Text>Page {currentPage} of {totalPages}</Text>
-          <Button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
+          <Button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}>
             Next
           </Button>
         </Box>
       }
       {/* Modal */}
-      <Dialog.Root lazyMount open={openModal} onOpenChange={(e) => setOpenModal(e.open)}>
+      <Dialog.Root
+        lazyMount
+        open={openModal}
+        onOpenChange={(e) => setOpenModal(e.open)}>
         <Portal>
-          <Dialog.Backdrop backdropBlur={"none"} minW={"1000px"} />
+          <Dialog.Backdrop
+            backdropBlur={"none"}
+            minW={"1000px"} />
           <Dialog.Positioner minW={"400px"} >
             <Dialog.Content>
               <Dialog.Header justifyContent={'center'}>
-                <Dialog.Title fontSize={"lg"} fontWeight="bold">Pokemon Name: {pokemon?.name}</Dialog.Title>
+                <Dialog.Title
+                  fontSize={"lg"}
+                  fontWeight="bold">
+                  Pokemon Name: {pokemon?.name}
+                </Dialog.Title>
               </Dialog.Header>
               <Dialog.Body>
-                <Box display={'flex'} justifyContent={'center'}>
+                <Box
+                  display={'flex'}
+                  justifyContent={'center'}>
                   <Image
                     w={'auto'}
                     h={'150px'}
                     src={pokemon?.sprite}
                     alt={pokemon?.name} />
                 </Box>
-                <Text fontSize={"2xl"} fontWeight="bold" mb={3}>Abilities:</Text>
-                <Box ml={7} as="ul" listStyleType="circle" fontSize={'lg'}>
+                <Text
+                  fontSize={"2xl"}
+                  fontWeight="bold"
+                  mb={3}>Abilities:</Text>
+                <Box
+                  ml={7}
+                  as="ul"
+                  listStyleType="circle"
+                  fontSize={'lg'}>
                   {
                     pokemon?.abilities.map(({ ability }: any, index) => (
                       <li key={index}>{ability.name!}</li>
